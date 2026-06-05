@@ -3,10 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load Dataset
-df = pd.read_csv(
-    r"C:\Users\aaron\OneDrive\Documents\New project\zomato.csv",
-    encoding="latin-1"
-)
+df = pd.read_csv("zomato.csv", encoding="latin-1")
 
 # Display Dataset Information
 print("First 5 Rows")
