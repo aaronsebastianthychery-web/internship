@@ -1,1 +1,67 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+# Load Dataset
+df = pd.read_csv("iris.csv")
+
+# Dataset Information
+print("Dataset Shape:", df.shape)
+print("\nColumns:")
+print(df.columns)
+
+# Species Count
+plt.figure(figsize=(6, 4))
+sns.countplot(x="Species", data=df)
+plt.title("Iris Species Count")
+plt.show()
+
+# Scatter Plot
+plt.figure(figsize=(7, 5))
+sns.scatterplot(
+    x="PetalLengthCm",
+    y="PetalWidthCm",
+    hue="Species",
+    data=df
+)
+plt.title("Petal Length vs Petal Width")
+plt.show()
+
+# Correlation Heatmap
+plt.figure(figsize=(8, 6))
+sns.heatmap(
+    df.drop("Species", axis=1).corr(),
+    annot=True
+)
+plt.title("Correlation Heatmap")
+plt.show()
+
+# Features and Target
+X = df.drop("Species", axis=1)
+y = df["Species"]
+
+# Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42
+)
+
+# Model
+model = DecisionTreeClassifier()
+
+# Train
+model.fit(X_train, y_train)
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Accuracy
+accuracy = accuracy_score(y_test, y_pred)
+
+print("\nModel Accuracy:", accuracy)
